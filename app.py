@@ -1,7 +1,6 @@
 # run [py -m PyInstaller --onefile --noconsole --name FixtureDisplay --add-data "templates;templates" --add-data "static;static" app.py] while in the directory to build
 from flask import Flask, render_template, jsonify
 import csv
-import os
 from datetime import datetime, timedelta
 import tkinter as tk
 from tkinter import filedialog
@@ -12,7 +11,6 @@ app = Flask(__name__)
 
 # Anchor the CSV path to this script's own folder, so it works no matter
 # what directory you launch "python app.py" from.
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CSV_PATH = None
 MATCH_DURATION_MINS = 180   # how long a match "counts" as current/in-progress
 
