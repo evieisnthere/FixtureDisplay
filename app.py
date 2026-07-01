@@ -2,6 +2,7 @@
 from flask import Flask, render_template, jsonify
 import csv
 import os
+import glob
 import threading
 import time
 from datetime import datetime, timedelta
@@ -17,25 +18,38 @@ app = Flask(__name__)
 CSV_PATH = None
 MATCH_DURATION_MINS = 140   # how long a match "counts" as current/in-progress
 
+CONFIG_FILE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    "config.json"
+)
+
+
+def load_config():
+    with open(CONFIG_FILE, "r") as f:
+        return json.load(f)
+
+
 def select_csv():
 
     global CSV_PATH
 
-    root = tk.Tk()
-    root.withdraw()
+    config = load_config()
 
-    CSV_PATH = filedialog.askopenfilename(
-        title="Select Fixtures CSV",
-        filetypes=[
-            ("CSV Files", "*.csv"),
-            ("All Files", "*.*")
-        ]
+    downloads_dir = config["downloads_folder"]
+
+    files = glob.glob(
+        os.path.join(downloads_dir, "*.csv")
     )
 
-    root.destroy()
-
-    if not CSV_PATH:
+    if not files:
+        print("No CSV files found.")
         exit()
+
+    # Pick newest CSV
+    CSV_PATH = max(
+        files,
+        key=os.path.getmtime
+    )
 
 
 # --- Fixture cache -----------------------------------------------------

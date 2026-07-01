@@ -1,0 +1,21 @@
+{
+    "downloads_folder": "\\\\2022beast\\ApexShare$",
+    "leagues": [
+        {
+            "name": "U/22 Womens",
+            "url": "https://cricketaustralia.spawtz.com/Leagues/Fixtures?LeagueId=5&SeasonId=10&DivisionId=171"
+        },
+        {
+            "name": "U/22 Mens",
+            "url": "https://cricketaustralia.spawtz.com/Leagues/Fixtures?LeagueId=5&SeasonId=10&DivisionId=170"
+        },
+        {
+            "name": "Open Womens",
+            "url": "https://cricketaustralia.spawtz.com/Leagues/Fixtures?LeagueId=5&SeasonId=10&DivisionId=169"
+        },
+        {
+            "name": "Open Mens",
+            "url": "https://cricketaustralia.spawtz.com/Leagues/Fixtures?LeagueId=5&SeasonId=10&DivisionId=168"
+        }
+    ]
+}

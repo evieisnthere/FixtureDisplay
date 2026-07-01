@@ -4,37 +4,53 @@ import re
 import sys
 import tempfile
 import time
+import json
 from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
 
+CONFIG_FILE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    "config.json"
+)
+
+
+def load_config():
+    with open(CONFIG_FILE, "r") as f:
+        return json.load(f)
+
+
+config = load_config()
+
+
 PAGES = [
     {
-        "url": "https://cricketaustralia.spawtz.com/Leagues/Fixtures?LeagueId=5&SeasonId=10&DivisionId=171",
-        "league": "U/22 Womens",
-    },
-     {
-         "url": "https://cricketaustralia.spawtz.com/Leagues/Fixtures?LeagueId=5&SeasonId=10&DivisionId=170",
-         "league": "U/22 Mens",
-    },
-     {
-         "url": "https://cricketaustralia.spawtz.com/Leagues/Fixtures?LeagueId=5&SeasonId=10&DivisionId=169",
-         "league": "Open Womens",
-    },
-     {
-         "url": "https://cricketaustralia.spawtz.com/Leagues/Fixtures?LeagueId=5&SeasonId=10&DivisionId=168",
-         "league": "Open Mens",
-    },        
+        "url": league["url"],
+        "league": league["name"]
+    }
+    for league in config.get("leagues", [])
 ]
+
+_downloads_dir = config["downloads_folder"].strip()
 
 OUTPUT_FILENAME = "fixtures_combined.csv"
 
-# _downloads_dir = os.path.join(os.path.expanduser("~"), "Downloads")
-_downloads_dir = "Z:"
-if os.path.isdir(_downloads_dir):
-    OUTPUT_CSV = os.path.join(_downloads_dir, OUTPUT_FILENAME)
+OUTPUT_CSV = os.path.join(
+    _downloads_dir,
+    OUTPUT_FILENAME
+)
+
+
+if os.path.exists(_downloads_dir):
+    OUTPUT_CSV = os.path.join(
+        _downloads_dir,
+        OUTPUT_FILENAME
+    )
 else:
+    print(
+        f"Warning: {_downloads_dir} not available. Saving locally."
+    )
     OUTPUT_CSV = OUTPUT_FILENAME
 
 
