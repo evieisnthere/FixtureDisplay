@@ -11,5 +11,3 @@ Makes use of:
 - BeautifulSoup (bs4)
 
 Probably a few too many libraries, however that is yet to be seen.
-
-[Running the Overlay.pdf]
