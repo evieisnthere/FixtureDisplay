@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fixture Display</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* Index-page-only additions, kept out of style.css so the
+           broadcast pages (court.html / overlay.html) are unaffected. */
+        body.index-body {
+            overflow-y: auto;
+        }
+
+        .court-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .court-card {
+            display: block;
+            width: 260px;
+            padding: 30px 20px;
+            border: 2px solid rgba(245, 197, 24, 0.35);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--white);
+        }
+
+        .court-card .court-name {
+            font-size: 1.8rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .court-card .court-links {
+            margin-top: 12px;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            color: var(--slate);
+        }
+
+        .court-card .court-links a {
+            color: var(--slate);
+        }
+
+        .court-card .court-links a:hover {
+            color: var(--gold);
+        }
+
+        .empty-state {
+            color: var(--slate);
+            font-size: 1.3rem;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body class="index-body">
+
+    <div class="overlay">
+
+        <div class="eyebrow">
+            <span class="rule"></span>
+            <span class="eyebrow-text">Fixture Display</span>
+            <span class="rule"></span>
+        </div>
+
+        {% if courts %}
+        <div class="court-grid">
+            {% for c in courts %}
+            <div class="court-card">
+                <div class="court-name">{{ c }}</div>
+                <div class="court-links">
+                    <a href="{{ url_for('court', court_name=c) }}">Display</a>
+                    &nbsp;·&nbsp;
+                    <a href="{{ url_for('overlay', court_name=c) }}">Overlay</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">
+            No courts configured yet. Open settings.py and set the
+            Number of Courts, then run fixture-scraper2.py.
+        </div>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
