@@ -12,4 +12,4 @@ Makes use of:
 
 Probably a few too many libraries, however that is yet to be seen.
 
-![[Running the Overlay.pdf]]
+[Running the Overlay.pdf]
